@@ -26,7 +26,8 @@ int main()
         src = wm.getMat((double)t.count()/1000);
         
         //==========================代码区========================//
-        std::tie(outputImage, RCenter, targetCenter) = tg.findTarget(src);
+        
+        outputImage = tg.findR(src);
         cv::imshow(windowName1, outputImage);
 
         //=======================================================//

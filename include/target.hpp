@@ -12,10 +12,15 @@ namespace TARGET
     class Target
     {
     private:
-        cv::Mat grayImage;
-        cv::Mat binaryImage;
+        cv::Point2f targetCenter;
+        cv::Point2f RCenter;
+        int flag = 0;
+        cv::Mat removeAnnulus(const cv::Mat& src, const cv::Point& center, int innerRadius, int outerRadius);
+        void firstFind(cv::Mat &srcin);
+        std::vector<std::vector<cv::Point>> findCountor(const cv::Mat src);
     public:
-        std::tuple<cv::Mat, cv::Point2d, cv::Point2d> findTarget(cv::Mat src);
+        cv::Mat findTarget(const cv::Mat srcin);
+        cv::Mat findR(const cv::Mat srcin);
     };
 }
 
