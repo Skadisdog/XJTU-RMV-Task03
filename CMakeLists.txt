@@ -9,7 +9,5 @@ aux_source_directory(./src ALL_SRCS)
 include_directories(include
 ${OpenCV_INCLUDE_DIRS})
 
-set(SRC ./cc)
-
 add_executable(task main.cpp ${ALL_SRCS})
 target_link_libraries(task ${OpenCV_LIBS})
