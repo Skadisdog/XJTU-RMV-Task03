@@ -15,12 +15,16 @@ namespace TARGET
         cv::Point2f targetCenter;
         cv::Point2f RCenter;
         int flag = 0;
+        int tarFlag = 0;
         cv::Mat removeAnnulus(const cv::Mat& src, const cv::Point& center, int innerRadius, int outerRadius);
-        void firstFind(cv::Mat &srcin);
+        void firstFind(const cv::Mat &srcin);
+        void firstFindTarget(const cv::Mat &srcin);
         std::vector<std::vector<cv::Point>> findCountor(const cv::Mat src);
     public:
-        cv::Mat findTarget(const cv::Mat srcin);
-        cv::Mat findR(const cv::Mat srcin);
+        void findTarget(const cv::Mat srcin);
+        void findR(const cv::Mat srcin);
+        cv::Point2f getR();
+        cv::Point2f getTarget();
     };
 }
 
