@@ -10,6 +10,7 @@ using namespace cv;
 
 int main()
 {
+    std::ofstream outputFile("output.txt");
     std::chrono::milliseconds t = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
     WINDMILL::WindMill wm(t.count()/1000.0);
     TARGET::Target tg;
@@ -22,7 +23,7 @@ int main()
     FITTING::Fitting ft;
     Parameter a;
 
-    while (1) // 距离 169.4
+    while(1) // 距离 169.4
     {
         count++;
         t = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
@@ -48,24 +49,32 @@ int main()
         double dt = ((double)t.count()-(double)tLast.count())/1000.0;
         double distance = cv::norm(targetCenterLast - targetCenter);
         double drad = distance / cv::norm(RCenter - targetCenter);
-        if(count % 1 == 0)
+        if(count % 5 == 0)
         {
             ft.addData({(double)t.count()/1000.0, drad/dt});
-            std::cout<<fixed<<(double)t.count()/1000.0-1727871770<<" "<<drad/dt<<endl;
+            outputFile<<fixed<<(double)t.count()/1000.0<<" "<<drad/dt<<endl;
         }
         if(count % 100 == 0)
         {
             a = ft.calculate();
-            // std::cout<<fixed<<a.A<<" "<<a.omega<<" "<<a.phi<<" "<<a.B<<std::endl;
-            count = 0;
-            ft.clearData();
+            std::cout<<fixed<<a.A<<" "<<a.omega<<" "<<a.phi<<" "<<a.B<<std::endl;
+            if(abs(a.A-0.785)<=0.785*0.05 &&
+                abs(a.omega-1.884)<=1.884*0.05 &&
+                abs(a.phi-0.24)<=0.24*0.05 &&
+                abs(a.B-1.305)<=1.305*0.05)
+            {
+                cout<<count<<endl;
+                break;
+            }
+            //ft.clearData();
+            //break;
         }
         tLast = t;
         RCenterLast = RCenter;
         targetCenterLast = targetCenter;
         /*circle(src, targetCenter, 3, Scalar(255,0,0), -1);
-        cv::imshow("1", src);
-        cv::waitKey(1);*/
+        cv::imshow("1", src);*/
+        cv::waitKey(10);
     }
     return 0;
 }

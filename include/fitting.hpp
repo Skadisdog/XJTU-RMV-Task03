@@ -35,7 +35,7 @@ namespace FITTING
                 const T& phi = parameters[2];
                 const T& b = parameters[3];
 
-                residual[0] = y_ - (A * ceres::cos(omega * t_ + phi) + b);
+                residual[0] = T(y_) - (A * ceres::cos(omega * T(t_) + phi) + b);
                 return true;
             }
 
@@ -50,7 +50,7 @@ namespace FITTING
         }
         void clearData()
         {
-            data.erase(data.begin(), data.end());
+            data.clear();
         }
         struct Parameter calculate();
     };

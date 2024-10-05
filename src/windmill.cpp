@@ -84,7 +84,6 @@ namespace WINDMILL
         {
             drawOtherFan(windmill, R_center, now_angle + 72 * i);
         }
-
         return windmill;
     }
 }
